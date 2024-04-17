@@ -8,7 +8,9 @@ use App\Models\Product;
 class ProductController extends Controller
 {
     public function index(){
-        return view('products.index',['products'=>Product::get()]);
+
+        $products = Product::all(); 
+        return view('products.index', compact('products'));
     }
 
     public function create(){
@@ -27,7 +29,11 @@ class ProductController extends Controller
 
         //upload image
         $imageName=time().'.'.$request->image->extension();
-        $request->image->move(public_path('products'),$imageName);
+
+        //$request->image->move(public_path('products'),$imageName);
+        $request->image->storeAs('uploads',$imageName);
+
+
         $product = new product;
         $product->image=$imageName;
         $product->name=$request->name;
@@ -54,7 +60,11 @@ class ProductController extends Controller
         if(isset($request->image)){
              //upload image
              $imageName=time().'.'.$request->image->extension();
-             $request->image->move(public_path('products'),$imageName);
+
+             //$request->image->move(public_path('products'),$imageName);
+             $request->image->storeAs('uploads',$imageName);
+
+
              $product->image=$imageName;
         }
 
@@ -68,6 +78,13 @@ class ProductController extends Controller
     public function destroy($id){
 
         $product = Product::where('id',$id)->first();
+
+         $imagePath = storage_path('app/public/uploads/' . $product->image);
+         if (file_exists($imagePath)) {
+          unlink($imagePath);
+         }
+
+
         $product->delete();
         return back()->withSuccess('product Deleted !!!!');
     }

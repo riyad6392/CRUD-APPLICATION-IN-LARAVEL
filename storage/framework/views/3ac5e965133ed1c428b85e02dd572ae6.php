@@ -20,6 +20,12 @@
 
 </nav>
 
+    <?php if($message = Session::get('success')): ?>
+        <div class="alert alert-success alert-block">
+          <strong><?php echo e($message); ?></strong>
+        </div>
+    <?php endif; ?>
+
     <div class="container">
     	<div class="text-right">
     		<a href="products/Create" class="btn btn-dark mt-2">New Product</a>
@@ -41,7 +47,11 @@
                        <td><?php echo e($product->name); ?></td>
                         <td><?php echo e($product->description); ?></td>
                        <td>
-                       	<img src="products/<?php echo e($product->image); ?>" class="rounded-circle" width="50" height="50" />
+                       	<!-- <img src="storage/uploads/<?php echo e($product->image); ?>" class="rounded-circle" width="50" height="50" /> -->
+
+                        <!-- <img src="storage/app/uploads/<?php echo e($product->image); ?>" class="rounded-circle" width="50" height="50" /> -->
+                        <!-- <img src="<?php echo e(url('storage/' . $product->image)); ?>" class="rounded-circle" width="50" height="50" /> -->
+                        <img src="<?php echo e($product->image); ?>" class="rounded-circle" width="50" height="50" />
                        </td>
                        <td>
                        	<a href="products/<?php echo e($product->id); ?>/edit" class="btn btn-dark btn-sm">Edit</a>
