@@ -16,6 +16,21 @@
     <li class="nav-item">
       <a class="nav-link text-light" href="/">Products</a>
     </li>
+
+     <li class="nav-item">
+      <a class="nav-link text-light" href="categories/Create">CategoryCreate</a>
+    </li>
+     <li class="nav-item">
+      <a class="nav-link text-light" href="categories/index">CategoryList</a>
+     </li>
+
+    <li class="nav-item">
+      <a class="nav-link text-light" href="brands/Create">BrandCreate</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light" href="brands/index">BrandList</a>
+     </li>
+
   </ul>
 
 </nav>
@@ -36,6 +51,8 @@
                        <th>Sno</th>
                        <th>Name</th>
                        <th>Description</th>
+                       <th>CategoryName</th>
+                       <th>BrandName</th>
                        <th>Image</th>
                        <th>Action</th>
                   </tr>
@@ -45,7 +62,9 @@
                   <tr>
                        <td>{{ $loop->index+1 }}</td>
                        <td>{{ $product->name }}</td>
-                        <td>{{ $product->description }}</td>
+                       <td>{{ $product->description }}</td>
+                       <td>{{ $product->category?->name }}</td>
+                       <td>{{ $product->brand?->name }}</td>
                        <td>
                        	<!-- <img src="storage/uploads/{{ $product->image }}" class="rounded-circle" width="50" height="50" /> -->
 

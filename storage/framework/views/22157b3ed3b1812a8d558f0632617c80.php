@@ -30,7 +30,7 @@
     	<div class="row justify-content-center">
         <div class="col-sm-8">
           <div class="card mt-3 p-3">
-            <form method="POST" action="/products/store" enctype="multipart/form-data">
+            <form method="POST" action="/categories/store" enctype="multipart/form-data">
             <?php echo csrf_field(); ?>
             <div class="form-group">
               <label>Name</label>
@@ -40,42 +40,21 @@
               <?php endif; ?>
             </div>
 
-            <div class="form-group">
+          <!--   <div class="form-group">
               <label>Description</label>
               <textarea class="form-control" row="4" name="description"><?php echo e(old('description')); ?></textarea>
               <?php if($errors->has('description')): ?>
                   <span class="text-danger"><?php echo e($errors->first('description')); ?></span>
               <?php endif; ?>
-            </div>
+            </div> -->
 
-
-            <h1>Category</h1>
-            <select name="category_id">
-              <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                 <option value="<?php echo e($category->id); ?>"><?php echo e($category->name); ?></option>
-              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </select>
-
-
-                  <h1>Brand</h1>
-                  <select name="brand_id">
-                  <?php $__currentLoopData = $brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                  <option value="<?php echo e($brand->id); ?>"><?php echo e($brand->name); ?></option>
-                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                  </select>
-
-
-             
-            
-
-
-            <div class="form-group">
+           <!--  <div class="form-group">
               <label>Image</label>
               <input type="file" name="image" class="form-control" />
               <?php if($errors->has('image')): ?>
                   <span class="text-danger"><?php echo e($errors->first('image')); ?></span>
               <?php endif; ?>
-            </div>
+            </div> -->
 
             <button type="submit" class="btn btn-dark">Submit</button>
 
@@ -85,4 +64,4 @@
       </div>
     </div>
 </body>
-</html><?php /**PATH C:\xampp\htdocs\LaravelCRUD\resources\views/products/create.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\xampp\htdocs\LaravelCRUD\resources\views/categories/create.blade.php ENDPATH**/ ?>

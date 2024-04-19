@@ -30,7 +30,7 @@
     	<div class="row justify-content-center">
         <div class="col-sm-8">
           <div class="card mt-3 p-3">
-            <form method="POST" action="/products/store" enctype="multipart/form-data">
+            <form method="POST" action="/categories/store" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
               <label>Name</label>
@@ -40,42 +40,21 @@
               @endif
             </div>
 
-            <div class="form-group">
+          <!--   <div class="form-group">
               <label>Description</label>
               <textarea class="form-control" row="4" name="description">{{old('description')}}</textarea>
               @if($errors->has('description'))
                   <span class="text-danger">{{ $errors->first('description')}}</span>
               @endif
-            </div>
+            </div> -->
 
-
-            <h1>Category</h1>
-            <select name="category_id">
-              @foreach($categories as $category)
-                 <option value="{{$category->id}}">{{$category->name}}</option>
-              @endforeach
-            </select>
-
-
-                  <h1>Brand</h1>
-                  <select name="brand_id">
-                  @foreach($brands as $brand)
-                  <option value="{{$brand->id}}">{{$brand->name}}</option>
-                  @endforeach
-                  </select>
-
-
-             
-            
-
-
-            <div class="form-group">
+           <!--  <div class="form-group">
               <label>Image</label>
               <input type="file" name="image" class="form-control" />
               @if($errors->has('image'))
                   <span class="text-danger">{{ $errors->first('image')}}</span>
               @endif
-            </div>
+            </div> -->
 
             <button type="submit" class="btn btn-dark">Submit</button>
 
