@@ -16,9 +16,34 @@
     <li class="nav-item">
       <a class="nav-link text-light" href="/">Products</a>
     </li>
+
+     <li class="nav-item">
+      <a class="nav-link text-light" href="categories/Create">CategoryCreate</a>
+    </li>
+     <li class="nav-item">
+      <a class="nav-link text-light" href="categories/index">CategoryList</a>
+     </li>
+
+    <li class="nav-item">
+      <a class="nav-link text-light" href="brands/Create">BrandCreate</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light" href="brands/index">BrandList</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link text-light" href="stocks/index">StockList</a>
+    </li>
+
   </ul>
 
 </nav>
+
+    @if($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+          <strong>{{ $message }}</strong>
+        </div>
+    @endif
 
     <div class="container">
     	<div class="text-right">
@@ -30,6 +55,8 @@
                        <th>Sno</th>
                        <th>Name</th>
                        <th>Description</th>
+                       <th>CategoryName</th>
+                       <th>BrandName</th>
                        <th>Image</th>
                        <th>Action</th>
                   </tr>
@@ -39,9 +66,15 @@
                   <tr>
                        <td>{{ $loop->index+1 }}</td>
                        <td>{{ $product->name }}</td>
-                        <td>{{ $product->description }}</td>
+                       <td>{{ $product->description }}</td>
+                       <td>{{ $product->category?->name }}</td>
+                       <td>{{ $product->brand?->name }}</td>
                        <td>
-                       	<img src="products/{{ $product->image }}" class="rounded-circle" width="50" height="50" />
+                       	<!-- <img src="storage/uploads/{{ $product->image }}" class="rounded-circle" width="50" height="50" /> -->
+
+                        <!-- <img src="storage/app/uploads/{{ $product->image }}" class="rounded-circle" width="50" height="50" /> -->
+                        <!-- <img src="{{ url('storage/' . $product->image) }}" class="rounded-circle" width="50" height="50" /> -->
+                        <img src="{{ $product->image}}" class="rounded-circle" width="50" height="50" />
                        </td>
                        <td>
                        	<a href="products/{{ $product->id }}/edit" class="btn btn-dark btn-sm">Edit</a>
@@ -53,8 +86,8 @@
                   @endforeach
                 </tbody>
             </table>
-      
-    
+
+
     </div>
 </body>
 </html>
