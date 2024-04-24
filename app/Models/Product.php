@@ -12,7 +12,7 @@ class Product extends Model
 
     protected $fillable = ['name', 'description', 'category_id', 'image'];
      public function getImageAttribute($value)
-    { 
+    {
         return $value ? Storage::url('uploads/'.$value) : NULL; // Assuming the image path is stored in the database
     }
 
@@ -22,6 +22,9 @@ class Product extends Model
 
      public function brand(){
         return $this->belongsTo(Brand::class);
+    }
+    public function stock(){
+        return $this->belongsTo(Stock::class);
     }
 }
 

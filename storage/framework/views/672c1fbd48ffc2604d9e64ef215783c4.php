@@ -50,6 +50,35 @@
               <?php endif; ?>
             </div>
 
+            
+
+            <h1>Category</h1>
+            <select name="category">
+                <?php $__currentLoopData = $categoris; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option  value="<?php echo e($category->id); ?>"><?php echo e($category->name); ?></option>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php if($errors->has('category')): ?>
+                 <span class="text-danger"><?php echo e($errors->first('category')); ?></span>
+                <?php endif; ?>
+            </select>
+
+
+            <h1>Brand</h1>
+            <select name="brand">
+                <?php $__currentLoopData = $brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option  value="<?php echo e($brand->id); ?>"><?php echo e($brand->name); ?></option>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php if($errors->has('brand')): ?>
+                 <span class="text-danger"><?php echo e($errors->first('brand')); ?></span>
+                <?php endif; ?>
+            </select>
+
+
+
+            
+
+
+
             <div class="form-group">
               <label>Image</label>
               <input type="file" name="image" class="form-control" />
@@ -58,7 +87,132 @@
               <?php endif; ?>
             </div>
 
-            <button type="submit" class="btn btn-dark">Submit</button>
+
+            <h1>Stock</h1>
+            <table class="table table-hover mt-2">
+                
+                <tbody>
+                    
+
+                    <div id="dynamic-fields">
+                        <div class="form-group dynamic-field">
+
+                               <?php $__currentLoopData = $stocks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $stock): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="text" name="stock[<?php echo e($key); ?>][name]" class="form-control mt-4" value="<?php echo e(old("stock.$key.name", $stock->name)); ?>" />
+                                                <input type="hidden" name="stock[<?php echo e($key); ?>][id]" value="<?php echo e($stock->id); ?>">
+                                                <input type="hidden" name="stock[<?php echo e($key); ?>][product_id]" value="<?php echo e($stock->product_id); ?>">
+                                                <?php $__errorArgs = ["stock.$key.name"];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                    <span class="text-danger"><?php echo e($message); ?></span>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" name="stock[<?php echo e($key); ?>][quantity]" class="form-control mt-4" value="<?php echo e(old("stock.$key.quantity", $stock->quantity)); ?>" />
+                                                <?php $__errorArgs = ["stock.$key.quantity"];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <span class="text-danger"><?php echo e($message); ?></span>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                            </div>
+                                            <?php if($key==0): ?>
+                                            <div class="col">
+                                                <button type="button" class="btn btn-primary mt-4" id="add-field">Add More</button>
+                                            </div>
+                                            <?php else: ?>
+                                            <div class="col">
+                                                <button type="button" class="btn btn-danger remove-field mt-4">Remove</button>
+                                            </div>
+                                            <?php endif; ?>
+                                        </div>
+
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
+
+                                            
+                                    </div>
+                                </div>
+                                
+                                <!-- End of dynamically added fields -->
+
+                                <button type="submit" class="btn btn-dark mt-2">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                    <script>
+                        $(document).ready(function () {
+                            var i = 1;
+                            $('#add-field').click(function () {
+                                $('#dynamic-fields').append(`
+                                    <div class="form-group dynamic-field">
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="text" name="stock[${i}][name]" placeholder="Name" class="form-control" value="<?php echo e(old('stock${i}name')); ?>">
+                                                <?php $__errorArgs = ['stock${i}name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                    <span class="text-danger"><?php echo e($message); ?></span>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" name="stock[${i}][quantity]" placeholder="Quantity" class="form-control "  value="<?php echo e(old('stock${i}quantity')); ?>">
+                                                <?php $__errorArgs = ['stock${i}quantity'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                    <span class="text-danger"><?php echo e($message); ?></span>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                            </div>
+                                            <div class="col">
+                                                <button type="button" class="btn btn-danger remove-field ">Remove</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `);
+                                i++;
+                            });
+
+                            // Remove dynamically added fields
+                            $(document).on('click', '.remove-field', function () {
+                                $(this).parent().parent().remove();
+                            });
+                        });
+                    </script>
+
+
+
+
+                </tbody>
+            </table>
+
+
+
+            
 
           </form>
           </div>
@@ -66,4 +220,5 @@
       </div>
     </div>
 </body>
-</html><?php /**PATH C:\xampp\htdocs\LaravelCRUD\resources\views/products/edit.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH C:\xampp\htdocs\LaravelCRUD\resources\views/products/edit.blade.php ENDPATH**/ ?>

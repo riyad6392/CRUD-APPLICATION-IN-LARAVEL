@@ -42,7 +42,7 @@
                   </tr>
                </thead>
                <tbody>
-               	  <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+               	  <?php $__currentLoopData = $categoris; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                   <tr>
                        <td><?php echo e($loop->index+1); ?></td>
                        <td><?php echo e($category->name); ?></td>
@@ -55,8 +55,9 @@
                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
-      
-    
+
+
     </div>
 </body>
-</html><?php /**PATH C:\xampp\htdocs\LaravelCRUD\resources\views/categories/index.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH C:\xampp\htdocs\LaravelCRUD\resources\views/categories/index.blade.php ENDPATH**/ ?>

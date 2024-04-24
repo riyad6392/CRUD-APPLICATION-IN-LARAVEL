@@ -29,7 +29,11 @@
     </li>
     <li class="nav-item">
       <a class="nav-link text-light" href="brands/index">BrandList</a>
-     </li>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link text-light" href="stocks/index">StockList</a>
+    </li>
 
   </ul>
 
@@ -53,6 +57,7 @@
                        <th>Description</th>
                        <th>CategoryName</th>
                        <th>BrandName</th>
+                       <th>ModelName</th>
                        <th>Image</th>
                        <th>Action</th>
                   </tr>
@@ -65,6 +70,35 @@
                        <td><?php echo e($product->description); ?></td>
                        <td><?php echo e($product->category?->name); ?></td>
                        <td><?php echo e($product->brand?->name); ?></td>
+                       
+
+                       <td>
+                             
+                                <table class="table table-hover mt-2">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $__currentLoopData = $stocks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stock): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <tr>
+                                                <?php if($product->id==$stock->product_id): ?>
+                                                  <td><?php echo e($stock->name); ?></td>
+                                                  <td><?php echo e($stock->quantity); ?></td>
+                                                <?php endif; ?>
+                                            </tr>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </tbody>
+                                </table>
+                             
+                        </td>
+
+
+
+
+
                        <td>
                        	<!-- <img src="storage/uploads/<?php echo e($product->image); ?>" class="rounded-circle" width="50" height="50" /> -->
 
@@ -82,8 +116,9 @@
                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
-      
-    
+
+
     </div>
 </body>
-</html><?php /**PATH C:\xampp\htdocs\LaravelCRUD\resources\views/products/index.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH C:\xampp\htdocs\LaravelCRUD\resources\views/products/index.blade.php ENDPATH**/ ?>

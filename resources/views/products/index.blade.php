@@ -29,7 +29,11 @@
     </li>
     <li class="nav-item">
       <a class="nav-link text-light" href="brands/index">BrandList</a>
-     </li>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link text-light" href="stocks/index">StockList</a>
+    </li>
 
   </ul>
 
@@ -53,6 +57,7 @@
                        <th>Description</th>
                        <th>CategoryName</th>
                        <th>BrandName</th>
+                       <th>ModelName</th>
                        <th>Image</th>
                        <th>Action</th>
                   </tr>
@@ -65,6 +70,37 @@
                        <td>{{ $product->description }}</td>
                        <td>{{ $product->category?->name }}</td>
                        <td>{{ $product->brand?->name }}</td>
+                       {{-- <td>{{ $product->id }}</td> --}}
+
+                       <td>
+                             {{-- @if ($product->stocks && count($product->stocks) > 0) --}}
+                                <table class="table table-hover mt-2">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($stocks as $stock)
+                                            <tr>
+                                                @if($product->id==$stock->product_id)
+                                                  <td>{{ $stock->name }}</td>
+                                                  <td>{{ $stock->quantity }}</td>
+                                                @endif
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                             {{-- @else
+                                No stocks available.
+                            @endif --}}
+                        </td>
+
+
+
+
+
                        <td>
                        	<!-- <img src="storage/uploads/{{ $product->image }}" class="rounded-circle" width="50" height="50" /> -->
 
@@ -82,8 +118,8 @@
                   @endforeach
                 </tbody>
             </table>
-      
-    
+
+
     </div>
 </body>
 </html>

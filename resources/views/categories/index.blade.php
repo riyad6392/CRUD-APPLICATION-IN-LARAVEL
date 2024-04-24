@@ -42,7 +42,7 @@
                   </tr>
                </thead>
                <tbody>
-               	  @foreach($categories as $category)
+               	  @foreach($categoris as $category)
                   <tr>
                        <td>{{ $loop->index+1 }}</td>
                        <td>{{ $category->name }}</td>
@@ -55,8 +55,8 @@
                   @endforeach
                 </tbody>
             </table>
-      
-    
+
+
     </div>
 </body>
 </html>

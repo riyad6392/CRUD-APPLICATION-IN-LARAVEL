@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\StockController;
 
 
 
@@ -34,6 +35,12 @@ Route::get('brands/{id}/edit',[BrandController::class,'edit']);
 Route::get('brands/{id}/delete',[BrandController::class,'destroy']);
 Route::put('{id}/update',[BrandController::class,'update']);
 
+
+//stock
+  Route::get('stocks/index',[StockController::class,'index'])->name('stock.index');
+// Route::get('stocks/Create',[StockController::class,'create'])->name('stocks.create');
+// Route::post('products/store',[StockController::class,'store'])->name('stocks.store');
+  Route::get('stocks/{id}/delete',[StockController::class,'destroy']);
 
 
 
