@@ -14,7 +14,7 @@
   <!-- Links -->
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link text-light" href="/">Products</a>
+      <a class="nav-link text-light" href="/index">Products</a>
     </li>
      <li class="nav-item">
       <a class="nav-link text-light" href="Create">Category</a>
@@ -42,7 +42,7 @@
                   </tr>
                </thead>
                <tbody>
-               	  @foreach($categories as $category)
+               	  @foreach($categoris as $category)
                   <tr>
                        <td>{{ $loop->index+1 }}</td>
                        <td>{{ $category->name }}</td>
@@ -55,8 +55,8 @@
                   @endforeach
                 </tbody>
             </table>
-      
-    
+
+
     </div>
 </body>
 </html>

@@ -39,6 +39,7 @@
                        <th>Category</th>
                        <th>Image</th> -->
                        <th>Quantity</th>
+                       <th>Product_ID</th>
                        <th>Action</th>
                   </tr>
                </thead>
@@ -48,6 +49,7 @@
                        <td>{{ $loop->index+1 }}</td>
                        <td>{{ $stock->name }}</td>
                        <td>{{ $stock->quantity }}</td>
+                       <td>{{ $stock->product_id }}</td>
                        <td>
                        	<a href="{{ $stock->id }}/delete" class="btn btn-danger btn-sm">Delete</a>
 

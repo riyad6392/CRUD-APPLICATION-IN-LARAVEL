@@ -14,7 +14,7 @@
         <!-- Links -->
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link text-light" href="/">Products</a>
+                <a class="nav-link text-light" href="/index">Products</a>
             </li>
         </ul>
     </nav>
@@ -47,6 +47,14 @@
                             @endif
                         </div>
 
+                        <div class="form-group">
+                            <label>Price</label>
+                            <textarea class="form-control" row="4" name="price">{{old('price')}}</textarea>
+                            @if($errors->has('price'))
+                                <span class="text-danger">{{ $errors->first('price')}}</span>
+                            @endif
+                        </div>
+
                         <h1>Category</h1>
                         <select name="category_id">
                             @foreach($categories as $category)
@@ -71,43 +79,111 @@
 
                         <h1>Stock</h1>
 
-                        <!-- Dynamically added fields -->
-                        <div id="dynamic-fields">
-                            <div class="form-group dynamic-field">
-                                <input type="text" name="stock[0][name]" placeholder="Name"  class="form-control ">
-                                <input type="text" name="stock[0][quantity]" placeholder="Quantity" class="form-control mt-4">
-                                <button type="button" class="btn btn-danger remove-field mt-4">Remove</button>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-primary mt-2" id="add-field">Add More</button>
-                        <!-- End of dynamically added fields -->
+                       <!-- Dynamically added fields -->
+                       <div id="dynamic-fields">
+                        <div class="form-group dynamic-field">
 
-                        <button type="submit" class="btn btn-dark">Submit</button>
-                    </form>
-                </div>
+                                @if(!empty(old('stock')))
+
+                                    @foreach(old('stock') as $key => $stock)
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="text" name="stock[{{  $key }}][name]" placeholder="Name" class="form-control mt-4" value="{{  $stock['name'] }}">
+                                                @error("stock.$key.name")
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" name="stock[{{  $key }}][quantity]" placeholder="Quantity" class="form-control mt-4" value="{{ $stock['quantity'] }}">
+                                                @error("stock.$key.quantity")
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            {{-- <div class="col">
+                                                <button type="button" class="btn btn-danger remove-field mt-4">Remove</button>
+                                            </div> --}}
+                                            @if($key==0)
+                                            <div class="col">
+                                                <button type="button" class="btn btn-primary mt-4" id="add-field">Add More</button>
+                                            </div>
+                                            @else
+                                            <div class="col">
+                                                <button type="button" class="btn btn-danger remove-field mt-4">Remove</button>
+                                            </div>
+                                            @endif
+                                        </div>
+
+                                    @endforeach
+
+                                @else
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="text" name="stock[0][name]" placeholder="Name" class="form-control" value="{{ old('stock.0.name') }}">
+                                            @error('stock.0.name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" name="stock[0][quantity]" placeholder="Quantity" class="form-control" value="{{ old('stock.0.quantity') }}">
+                                            @error('stock.0.quantity')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary " id="add-field">Add More</button>
+                                        </div>
+
+                                    </div>
+                                @endif
+
+                                {{-- <div class="col">
+                                    <button type="button" class="btn btn-danger remove-field mt-2">Remove</button>
+                                </div> --}}
+                        </div>
+                    </div>
+                    {{-- <button type="button" class="btn btn-primary mt-2" id="add-field">Add More</button> --}}
+                    <!-- End of dynamically added fields -->
+
+                    <button type="submit" class="btn btn-dark mt-2">Submit</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        $(document).ready(function () {
-            var i = 1;
-            $('#add-field').click(function () {
-                $('#dynamic-fields').append(`
-                    <div class="form-group dynamic-field">
-                        <input type="text" name="stock[${i}][name]" placeholder="Name" class="form-control" >
-                        <input type="text" name="stock[${i}][quantity]" placeholder="Quantity" class="form-control mt-4">
-                        <button type="button" class="btn btn-danger remove-field mt-4">Remove</button>
+<script>
+    $(document).ready(function () {
+        var i = 1;
+        $('#add-field').click(function () {
+            $('#dynamic-fields').append(`
+                <div class="form-group dynamic-field">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" name="stock[${i}][name]" placeholder="Name" class="form-control" value="{{ old('stock${i}name') }}">
+                             @error('stock${i}name')
+                                <span class="text-danger">{{ $message }}</span>
+                             @enderror
+                        </div>
+                        <div class="col">
+                            <input type="text" name="stock[${i}][quantity]" placeholder="Quantity" class="form-control "  value="{{ old('stock${i}quantity') }}">
+                            @error('stock${i}quantity')
+                                <span class="text-danger">{{ $message }}</span>
+                             @enderror
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-danger remove-field ">Remove</button>
+                        </div>
                     </div>
-                `);
-                i++;
-            });
-
-            // Remove dynamically added fields
-            $(document).on('click', '.remove-field', function () {
-                $(this).parent().remove();
-            });
+                </div>
+            `);
+            i++;
         });
-    </script>
+
+        // Remove dynamically added fields
+        $(document).on('click', '.remove-field', function () {
+            $(this).parent().parent().remove();
+        });
+    });
+</script>
 </body>
 </html>
