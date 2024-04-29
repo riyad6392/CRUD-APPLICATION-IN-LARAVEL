@@ -14,7 +14,7 @@
         <!-- Links -->
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link text-light" href="/">Products</a>
+                <a class="nav-link text-light" href="/index">Products</a>
             </li>
         </ul>
     </nav>
@@ -44,6 +44,14 @@
                             <textarea class="form-control" row="4" name="description">{{old('description')}}</textarea>
                             @if($errors->has('description'))
                                 <span class="text-danger">{{ $errors->first('description')}}</span>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label>Price</label>
+                            <textarea class="form-control" row="4" name="price">{{old('price')}}</textarea>
+                            @if($errors->has('price'))
+                                <span class="text-danger">{{ $errors->first('price')}}</span>
                             @endif
                         </div>
 

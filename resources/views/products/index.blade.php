@@ -9,6 +9,9 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+
+
+
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark">
   <!-- Links -->
@@ -35,6 +38,8 @@
       <a class="nav-link text-light" href="stocks/index">StockList</a>
     </li>
 
+
+
   </ul>
 
 </nav>
@@ -48,6 +53,17 @@
     <div class="container">
     	<div class="text-right">
     		<a href="products/Create" class="btn btn-dark mt-2">New Product</a>
+            <a href="/profile" class="btn btn-dark mt-2">Profile</a>
+            {{-- <a href="/logout" class="btn btn-dark mt-2">Log Out</a> --}}
+            <form method="POST" action="{{ route('logout') }}" class="btn btn-dark mt-2">
+                @csrf
+
+                <x-responsive-nav-link :href="route('logout')"
+                        onclick="event.preventDefault();
+                                    this.closest('form').submit();">
+                    {{ __('Log Out') }}
+                </x-responsive-nav-link>
+            </form>
     	</div>
     		<table class="table table-hover mt-2">
                <thead>
@@ -55,6 +71,7 @@
                        <th>Sno</th>
                        <th>Name</th>
                        <th>Description</th>
+                       <th>Price</th>
                        <th>CategoryName</th>
                        <th>BrandName</th>
                        <th>ModelName</th>
@@ -68,6 +85,7 @@
                        <td>{{ $loop->index+1 }}</td>
                        <td>{{ $product->name }}</td>
                        <td>{{ $product->description }}</td>
+                       <td>{{ $product->price }}</td>
                        <td>{{ $product->category?->name }}</td>
                        <td>{{ $product->brand?->name }}</td>
                        {{-- <td>{{ $product->id }}</td> --}}
