@@ -10,7 +10,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'category_id', 'image'];
+    protected $fillable = ['name', 'description', 'price', 'category_id', 'image'];
      public function getImageAttribute($value)
     {
         return $value ? Storage::url('uploads/'.$value) : NULL; // Assuming the image path is stored in the database

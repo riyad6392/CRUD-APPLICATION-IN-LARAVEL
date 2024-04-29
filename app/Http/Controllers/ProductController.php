@@ -19,6 +19,13 @@ class ProductController extends Controller
         return view('products.index', compact('products','stocks'));
     }
 
+    public function dashbord(){
+        $products = Product::with(['category:id,name', 'brand:id,name'])->get();
+        // dd($products);
+         $stocks=Stock::all();
+         return view('dashboard', compact('products','stocks'));
+    }
+
     public function create(){
 
              $categories = Category::all();
@@ -31,17 +38,20 @@ class ProductController extends Controller
     }
     public function store(Request $request){
         //validate data
-        //dd($request->all());
+        //dd($request->file('image')->getError());
 
         $request->validate([
             'name'=>'required',
             'description'=>'required',
+            'price'=> 'required',
             'category_id'=>'required|exists:categories,id',
             'image'=>'required|mimes:jpeg,jpg,png,gif|max:1000',
             'stock.*.name' => 'required|string|max:255',
             'stock.*.quantity' => 'required|integer|min:1'
         ]);
 
+
+       // dd($request);
 
 
 
@@ -56,8 +66,10 @@ class ProductController extends Controller
 
         $product = new Product;
         $product->image = $imageName;
-        $product->name = $request->name[0];
+        //$product->image = $request->image;
+        $product->name = $request->name;
         $product->description = $request->description;
+        $product->price = $request->price;
         $product->category_id = $request->category_id;
         $product->brand_id = $request->brand_id;
         $product->save();
@@ -93,15 +105,16 @@ class ProductController extends Controller
 
     public function update(Request $request,$id){
         //validate data
-        //dd($request);
-        $stocks= Stock::all();
-        //dd($stocks);
+       // dd($id);
+        $stocks= Stock::where('product_id',$id)->get();
+       // dd($stocks);
         $request->validate([
             'name'=>'required',
             'description'=>'required',
-            'category'=>'required',
-            'brand'=>'required',
-            'image'=>'nullable|mimes:jpeg,jpg,png,gif|max:1000',
+            'price'=> 'required',
+            'category_id'=>'required',
+            'brand_id'=>'required',
+            // 'image'=>'nullable|mimes:jpeg,jpg,png,gif|max:1000',
             'stock.*.name' => 'required|string|max:255',
             'stock.*.quantity' => 'required|integer|min:1'
         ]);
@@ -123,19 +136,23 @@ class ProductController extends Controller
 
         $product->name=$request->name;
         $product->description=$request->description;
+        $product->price=$request->price;
+        $product->category_id = $request->category_id;
+        $product->brand_id = $request->brand_id;
+
         $product->save();
 
 
 
         $stockData = $request->input('stock');
         //dd($stockData);
+        //dd($id);
         $newStockIds = [];
         foreach ($stockData as $stock) {
             $stockId = isset($stock['id']) ? $stock['id'] : null;
             if ($stockId !== null) {
-
-
                 $newStockIds[] = $stockId;
+
             }
 
             Stock::updateOrCreate(['id' => $stockId], [
@@ -143,25 +160,47 @@ class ProductController extends Controller
                 'quantity' => $stock['quantity'],
                 'product_id' => $product->id, // Associate the stock entry with the product
             ]);
+
+
         }
+
+        $removeStockIds = array_diff($stocks->pluck('id')->toArray(), $newStockIds);
+
+        if($removeStockIds){
+            Stock::whereIn('id', $removeStockIds)->delete();
+        }
+
+        //dd($newStockIds);
+
+        // foreach($stocks as $stock){
+        //         //dd($stock['product_id']);
+        //         $kd=$stock['id'];
+        //         //dd($kd);
+        //         $delId = in_array($kd, $newStockIds) ? 1 : null;
+
+        //         //dd($delId);
+
+        //         if($delId==null){
+        //             //dd($kd);
+        //             //destroy2($kd);
+        //             Stock::destroy($kd);
+        //         }
+
+
+
+        // }
 
         //dd($DelStockIds);
 
         // Delete stock entries that are associated with the product but not present in the request
         // $product->stock()->whereNotIn('id', $newStockIds)->delete()
-       foreach($stocks as $stock){
-           if('product_id'==$stock['id']){
-              dd('product_id');
-           }
+    //    foreach($stocks as $stock){
+    //        if('product_id'==$stock['id']){
+    //           dd('product_id');
+    //        }
 
-       }
+    //    }
 
-
-        if ($product->stock()->exists()) {
-            $existingStockIds = $product->stocks->pluck('id')->toArray();
-            $deletedStockIds = array_diff($existingStockIds, $newStockIds);
-            Stock::destroy($deletedStockIds);
-        }
 
 
         return back()->withSuccess('product Updated !!!!');
@@ -193,6 +232,60 @@ class ProductController extends Controller
 
     //     return back()->withErrors('Stock entry not found.');
     // }
+
+    public function destroy2($id){
+
+        $Category = Stock::where('id',$id)->first();
+
+        $Category->delete();
+        return back()->withSuccess('Stock Deleted !!!!');
+    }
+
+    public function updateProduct(Request $request){
+        //validate data
+
+        $product = Product::findOrFail( $request->id );
+        $product->name=$request->name;
+        $product->description=$request->description;
+        $product->price=$request->price;
+        $product->category_id = $request->category_id;
+        $product->brand_id = $request->brand_id;
+
+        $product->update();
+
+
+
+
+
+        return back()->withSuccess('product Updated !!!!');
+        }
+
+
+        public function destroyProduct(Request $request){
+           // dd($request->id);
+            $product = Product::findOrFail( $request->id );
+
+            $imagePath = storage_path('app/public/uploads/' . $product->image);
+            if (file_exists($imagePath)) {
+             unlink($imagePath);
+            }
+
+            $product->delete();
+            return back()->withSuccess('product Deleted !!!!');
+
+
+        }
+
+        public function Stockstore(Request $request){
+
+            $product = new Stock;
+            $product->name=$request->name;
+            $product->quantity=$request->quantity;
+            $product->product_id = $request->product_id;
+            $product->save();
+
+        }
+
 
 
 
