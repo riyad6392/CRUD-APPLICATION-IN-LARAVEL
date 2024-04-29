@@ -9,6 +9,9 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+
+
+
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark">
   <!-- Links -->
@@ -35,6 +38,8 @@
       <a class="nav-link text-light" href="stocks/index">StockList</a>
     </li>
 
+
+
   </ul>
 
 </nav>
@@ -48,6 +53,36 @@
     <div class="container">
     	<div class="text-right">
     		<a href="products/Create" class="btn btn-dark mt-2">New Product</a>
+            <a href="/profile" class="btn btn-dark mt-2">Profile</a>
+            
+            <form method="POST" action="<?php echo e(route('logout')); ?>" class="btn btn-dark mt-2">
+                <?php echo csrf_field(); ?>
+
+                <?php if (isset($component)) { $__componentOriginald69b52d99510f1e7cd3d80070b28ca18 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginald69b52d99510f1e7cd3d80070b28ca18 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.responsive-nav-link','data' => ['href' => route('logout'),'onclick' => 'event.preventDefault();
+                                    this.closest(\'form\').submit();']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('responsive-nav-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('logout')),'onclick' => 'event.preventDefault();
+                                    this.closest(\'form\').submit();']); ?>
+                    <?php echo e(__('Log Out')); ?>
+
+                 <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginald69b52d99510f1e7cd3d80070b28ca18)): ?>
+<?php $attributes = $__attributesOriginald69b52d99510f1e7cd3d80070b28ca18; ?>
+<?php unset($__attributesOriginald69b52d99510f1e7cd3d80070b28ca18); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginald69b52d99510f1e7cd3d80070b28ca18)): ?>
+<?php $component = $__componentOriginald69b52d99510f1e7cd3d80070b28ca18; ?>
+<?php unset($__componentOriginald69b52d99510f1e7cd3d80070b28ca18); ?>
+<?php endif; ?>
+            </form>
     	</div>
     		<table class="table table-hover mt-2">
                <thead>
@@ -55,6 +90,7 @@
                        <th>Sno</th>
                        <th>Name</th>
                        <th>Description</th>
+                       <th>Price</th>
                        <th>CategoryName</th>
                        <th>BrandName</th>
                        <th>ModelName</th>
@@ -68,6 +104,7 @@
                        <td><?php echo e($loop->index+1); ?></td>
                        <td><?php echo e($product->name); ?></td>
                        <td><?php echo e($product->description); ?></td>
+                       <td><?php echo e($product->price); ?></td>
                        <td><?php echo e($product->category?->name); ?></td>
                        <td><?php echo e($product->brand?->name); ?></td>
                        

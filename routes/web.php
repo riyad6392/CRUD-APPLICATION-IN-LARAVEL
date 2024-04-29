@@ -1,14 +1,29 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\StockController;
 
+Route::get('/', function () {
+    return view('welcome');
+});
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/',[ProductController::class,'index'])->name('products.index');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
+
+Route::get('/index',[ProductController::class,'index'])->name('products.index');
 Route::get('products/Create',[ProductController::class,'create'])->name('products.create');
 Route::post('products/store',[ProductController::class,'store'])->name('products.store');
 
@@ -41,6 +56,5 @@ Route::put('{id}/update',[BrandController::class,'update']);
 // Route::get('stocks/Create',[StockController::class,'create'])->name('stocks.create');
 // Route::post('products/store',[StockController::class,'store'])->name('stocks.store');
   Route::get('stocks/{id}/delete',[StockController::class,'destroy']);
-
 
 

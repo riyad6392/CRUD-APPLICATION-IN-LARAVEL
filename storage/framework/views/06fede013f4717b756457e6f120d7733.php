@@ -14,7 +14,7 @@
         <!-- Links -->
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link text-light" href="/">Products</a>
+                <a class="nav-link text-light" href="/index">Products</a>
             </li>
         </ul>
     </nav>
@@ -47,12 +47,19 @@
                             <?php endif; ?>
                         </div>
 
+                        <div class="form-group">
+                            <label>Price</label>
+                            <textarea class="form-control" row="4" name="price"><?php echo e(old('price')); ?></textarea>
+                            <?php if($errors->has('price')): ?>
+                                <span class="text-danger"><?php echo e($errors->first('price')); ?></span>
+                            <?php endif; ?>
+                        </div>
+
                         <h1>Category</h1>
                         <select name="category_id">
                             <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($category->id); ?>"><?php echo e($category->name); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            
                         </select>
 
                         <h1>Brand</h1>

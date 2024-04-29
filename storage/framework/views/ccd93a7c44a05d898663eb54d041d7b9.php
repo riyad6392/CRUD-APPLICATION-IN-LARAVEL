@@ -14,7 +14,7 @@
   <!-- Links -->
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link text-light" href="/">Products</a>
+      <a class="nav-link text-light" href="/index">Products</a>
     </li>
      <li class="nav-item">
       <a class="nav-link text-light" href="Create">Category</a>
@@ -55,8 +55,9 @@
                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
-      
-    
+
+
     </div>
 </body>
-</html><?php /**PATH C:\xampp\htdocs\LaravelCRUD\resources\views/brands/index.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH C:\xampp\htdocs\LaravelCRUD\resources\views/brands/index.blade.php ENDPATH**/ ?>
